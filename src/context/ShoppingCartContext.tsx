@@ -8,7 +8,7 @@ type ShoppingCartContext = {
   getItemQuantity: (id: number) => number;
   increaseCartQuantity: (id: number) => void;
   decreaseCartQuantity: (id: number) => void;
-  removeFromCart: (id: number) => number;
+  removeFromCart: (id: number) => void;
 };
 
 type CardItem = {
@@ -63,9 +63,20 @@ export const ShoppingCartProvider = ({
     });
   };
 
+  const removeFromCart = (id: number) => {
+    setCartItems((currItems) => {
+      return currItems.filter((item) => item.id !== id);
+    });
+  };
+
   return (
     <ShoppingCartContext.Provider
-      value={{ getItemQuantity, increaseCartQuantity, decreaseCartQuantity }}
+      value={{
+        getItemQuantity,
+        increaseCartQuantity,
+        decreaseCartQuantity,
+        removeFromCart,
+      }}
     >
       {children}
     </ShoppingCartContext.Provider>
